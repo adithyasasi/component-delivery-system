@@ -4,7 +4,7 @@ import { storageService } from '../services/storage.service';
 
 const uploadComponent = (req: Request, res: Response): void => {
   const uuid = registryService.generateUUID();
-  storageService.saveBundle(uuid, req.file!.buffer);
+  storageService.saveBundle(uuid, req.file!);
   res.status(201).json({ uuid });
 };
 
