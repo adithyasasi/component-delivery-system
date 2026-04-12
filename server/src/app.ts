@@ -1,9 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import componentRoutes from './routes/component.routes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/components', componentRoutes);
