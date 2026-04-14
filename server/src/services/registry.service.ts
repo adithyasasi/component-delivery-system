@@ -12,7 +12,8 @@ export interface ComponentMeta {
   name: string;
   exposedModule: string;   // primary exposed module (first or user-specified)
   exposedModules: string[]; // all exposed modules from remoteEntry.json
-  remoteEntry: string;      // full URL served via /static/{uuid}/remoteEntry.json
+  remoteEntry: string;      // full URL served via /static/{bundleUuid}/remoteEntry.json
+  bundleUuid: string;       // UUID of the bundle directory (for storage cleanup)
   createdAt: string;
 }
 
@@ -36,7 +37,7 @@ const saveRegistry = (registry: Registry): void => {
 const generateUUID = (): string => uuidv4();
 
 const isRegistered = (uuid: string): boolean => {
-  return storageService.exists(uuid);
+  return !!getMeta(uuid);
 };
 
 /**
@@ -49,6 +50,7 @@ const register = (
     exposedModule: string;
     exposedModules: string[];
     baseUrl: string;
+    bundleUuid: string;
   },
 ): ComponentMeta => {
   const registry = loadRegistry();
@@ -58,7 +60,8 @@ const register = (
     name: opts.name,
     exposedModule: opts.exposedModule,
     exposedModules: opts.exposedModules,
-    remoteEntry: `${opts.baseUrl}/static/${uuid}/remoteEntry.json`,
+    remoteEntry: `${opts.baseUrl}/static/${opts.bundleUuid}/remoteEntry.json`,
+    bundleUuid: opts.bundleUuid,
     createdAt: new Date().toISOString(),
   };
 

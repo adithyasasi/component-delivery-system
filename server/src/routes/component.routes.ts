@@ -10,6 +10,9 @@ router.get('/', componentController.listComponents);
 // Upload a new federation bundle (.zip)
 router.post('/', validateBundle, componentController.uploadComponent);
 
+// Federation manifest for initFederation() — { name: remoteEntryUrl }
+router.get('/federation-manifest', componentController.getFederationManifest);
+
 // Get metadata for a single component
 router.get('/:uuid/manifest', componentController.getComponentManifest);
 
