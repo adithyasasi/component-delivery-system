@@ -23,7 +23,15 @@ export type Registry = Record<string, ComponentMeta>;
 
 const loadRegistry = (): Registry => {
   if (!fs.existsSync(REGISTRY_PATH)) return {};
-  return JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
+  const content = fs.readFileSync(REGISTRY_PATH, 'utf-8').trim();
+  if (!content) return {};
+  try {
+    return JSON.parse(content) as Registry;
+  } catch {
+    // File is corrupted — reset it
+    saveRegistry({});
+    return {};
+  }
 };
 
 const saveRegistry = (registry: Registry): void => {

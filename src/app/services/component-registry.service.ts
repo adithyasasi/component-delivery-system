@@ -31,7 +31,6 @@ export class ComponentRegistryService {
     const manifest: ComponentManifest = await fetch(
       `${this.BASE_URL}/components/${uuid}/manifest`
     ).then((res) => {
-      console.log(`Fetched manifest for component in the LOADCOMPONENTCLASS ${uuid}:`, res);
       if (!res.ok)
         throw new Error(`Component "${uuid}" not found (${res.status})`);
       return res.json();
@@ -41,12 +40,15 @@ export class ComponentRegistryService {
     // If it was already registered during initFederation(), this is a no-op.
     // If it's a newly uploaded remote, this registers it dynamically.
     await fetchAndRegisterRemote(manifest.remoteEntry, manifest.name);
-
+    
+    console.log("Called fetchAndRegisterRemote for", manifest.remoteEntry, "as", manifest.name);
     // Load the exposed module using the registered remote name
     const module = await loadRemoteModule({
       remoteName: manifest.name,
       exposedModule: manifest.exposedModule,
     });
+
+
     // Find the exported Angular component class
     const componentClass = Object.values(module).find(
       (v) => v && typeof v === 'function' && !!(v as any).ɵcmp

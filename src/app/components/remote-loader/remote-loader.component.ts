@@ -102,7 +102,7 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
             // console.log('[RemoteLoader] Component class loaded:', componentClass);
             this.container.clear();
             this.componentRef = this.container.createComponent(componentClass as any);
-            console.log('[RemoteLoader] Component instance created:', this.componentRef.instance);
+            // console.log('[RemoteLoader] Component instance created:', this.componentRef.instance);
             this.updateInputs();
             this.subscribeToOutputs();
 
@@ -118,7 +118,7 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
     // Passes the inputs object key-by-key into the remote component instance
     private updateInputs(): void {
         if (!this.componentRef || !this.inputs) return;
-        console.log('[RemoteLoader] Updating inputs:', this.inputs);
+        // console.log('[RemoteLoader] Updating inputs:', this.inputs);
         Object.entries(this.inputs).forEach(([key, value]) => {
             this.componentRef!.setInput(key, value);
         });
