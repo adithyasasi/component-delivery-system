@@ -36,18 +36,15 @@ export class App {
     modifiedOn: null as string | null
   };
 
-  lastEvent: { event: string; payload: unknown } | null = null;
-
   onComponentEvent(event: { event: string; payload: unknown }): void {
-    this.lastEvent = event;
     console.log('[RemoteLoader] Event received:', event);
   }
 
-  changeParentID(): void {
-    if (this.entity.parentId === null) {
-      this.entity.parentId = `parent-${Math.floor(Math.random() * 1000)}`;
+  valueChange(): void {
+    if (this.entity.name === "Some different Name") {
+      this.entity.name = `Other Name`;
     } else {
-      this.entity.parentId = null;
+      this.entity.name = "Some different Name";
     }
    }
 }

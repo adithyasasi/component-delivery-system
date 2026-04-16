@@ -41,7 +41,7 @@ export class ComponentRegistryService {
     // If it's a newly uploaded remote, this registers it dynamically.
     await fetchAndRegisterRemote(manifest.remoteEntry, manifest.name);
     
-    console.log("Called fetchAndRegisterRemote for", manifest.remoteEntry, "as", manifest.name);
+    // console.log("Called fetchAndRegisterRemote for", manifest.remoteEntry, "as", manifest.name);
     // Load the exposed module using the registered remote name
     const module = await loadRemoteModule({
       remoteName: manifest.name,
@@ -59,7 +59,7 @@ export class ComponentRegistryService {
         `No Angular component found in remote module "${manifest.exposedModule}" for "${uuid}"`
       );
     }
-
+    // console.log("loaded component class for", uuid, ":", componentClass);
     return componentClass as Type<unknown>;
   }
 }

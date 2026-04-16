@@ -17,15 +17,15 @@
   </div>
 
   @if (uuid) {
-    <div class="loader-section">
-      <h2>Remote Component</h2>
+  <div class="loader-section">
+    <h2>Remote Component</h2>
       <app-remote-loader
         [uuid]="uuid"
         [inputs]="{ entity: entity }"
         (componentEvent)="onComponentEvent($event)">
       </app-remote-loader>
     </div>
-  }
+    }
 
    <!-- <app-remote-loader
         [uuid]="'a3ec3740-2f6d-49f4-a620-902c4fb13fbc'"
@@ -33,12 +33,6 @@
         (componentEvent)="onComponentEvent($event)">
       </app-remote-loader> -->
 
-  @if (lastEvent) {
-    <div class="event-log">
-      <strong>Last received event:</strong>
-      <pre>{{ lastEvent | json }}</pre>
-    </div>
-  }
 
-  <button (click)="changeParentID()">Change Parent ID</button>
+  <button (click)="valueChange()">Change Parent ID</button>
 </div>

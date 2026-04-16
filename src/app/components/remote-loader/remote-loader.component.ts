@@ -43,14 +43,6 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
 
     constructor(private registryService: ComponentRegistryService) { }
 
-    // ViewChild is not available until after view init — queue any early load requests
-    ngAfterViewInit(): void {
-        this.viewInitialized = true;
-        if (this.pendingLoad) {
-            this.loadComponent();
-        }
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['uuid']) {
             if (this.viewInitialized) {
@@ -66,6 +58,14 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
         }
     }
 
+    // ViewChild is not available until after view init — queue any early load requests
+    ngAfterViewInit(): void {
+        this.viewInitialized = true;
+        if (this.pendingLoad) {
+            this.loadComponent();
+        }
+    }
+
     private async loadComponent(): Promise<void> {
         if (!this.uuid) return;
 
@@ -78,7 +78,7 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
             const componentClass = await this.registryService.loadComponentClass(this.uuid);
             // console.log('[RemoteLoader] Component class loaded:', componentClass);
             this.container.clear();
-            this.componentRef = this.container.createComponent(componentClass as any);
+            this.componentRef = this.container.createComponent(componentClass);
             // console.log('[RemoteLoader] Component instance created:', this.componentRef.instance);
             this.updateInputs();
             this.subscribeToOutputs();
@@ -99,8 +99,6 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
         Object.entries(this.inputs).forEach(([key, value]) => {
             this.componentRef!.setInput(key, value);
         });
-
-        this.componentRef.changeDetectorRef.detectChanges();
     }
 
     // Subscribes to all EventEmitter properties on the remote component instance
@@ -115,7 +113,8 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
 
         Object.keys(instance).forEach((key) => {
             const prop = instance[key];
-            if (prop && typeof prop.subscribe === 'function') {
+            if (prop instanceof EventEmitter) {
+                console.log(prop);
                 const sub = prop.subscribe((payload: unknown) => {
                     this.componentEvent.emit({ event: key, payload });
                 });
