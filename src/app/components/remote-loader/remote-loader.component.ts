@@ -17,31 +17,8 @@ import { ComponentRegistryService } from '../../services/component-registry.serv
 @Component({
     selector: 'app-remote-loader',
     standalone: true,
-    template: `
-    @if (loading) {
-      <div class="rl-state">Loading component...</div>
-    }
-    @if (errorMessage) {
-      <div class="rl-error">⚠️ {{ errorMessage }}</div>
-    }
-    <ng-container #container></ng-container>
-  `,
-    styles: [
-        `
-      .rl-state {
-        padding: 16px;
-        color: #666;
-        font-family: sans-serif;
-      }
-      .rl-error {
-        padding: 16px;
-        color: #c62828;
-        background: #ffebee;
-        border-radius: 4px;
-        font-family: sans-serif;
-      }
-    `,
-    ],
+    templateUrl: './remote-loader.component.html',
+    styleUrl: './remote-loader.component.css',
 })
 export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestroy {
     // UUID of the component to load from the registry server

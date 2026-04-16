@@ -1,0 +1,7 @@
+@if (loading) {
+  <div class="rl-state">Loading component...</div>
+}
+@if (errorMessage) {
+  <div class="rl-error">⚠️ {{ errorMessage }}</div>
+}
+<ng-container #container></ng-container>

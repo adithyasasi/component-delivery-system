@@ -7,7 +7,31 @@
 
 h1 { font-size: 1.6rem; margin-bottom: 4px; }
 
-.subtitle { color: #666; margin-bottom: 24px; }
+.subtitle { color: #666; margin-bottom: 12px; }
+
+.version-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+}
+
+.version {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.version.remote {
+  background: #fff3e0;
+  color: #e65100;
+  border-color: #ffcc80;
+}
 
 .uuid-row {
   display: flex;

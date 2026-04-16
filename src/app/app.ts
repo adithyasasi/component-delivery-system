@@ -13,6 +13,16 @@ import { RemoteLoaderComponent } from './components/remote-loader/remote-loader.
 export class App {
   uuid = '';
 
+  /** Returns the host's @angular/forms version from the Native Federation externals map. */
+  get hostFormsVersion(): string {
+    const externals: Map<string, string> = (window as any).__NATIVE_FEDERATION__?.externals;
+    if (!externals) return 'unknown';
+    const entry = [...externals.keys()].find(
+      (key) => key.startsWith('@angular/forms@') && !externals.get(key)!.startsWith('http')
+    );
+    return entry ? entry.substring('@angular/forms@'.length) : 'unknown';
+  }
+
   // Sample complex input matching the DeliverableDetailComponent's @Input() entity shape
   entity = {
     name: 'Sample Deliverable',

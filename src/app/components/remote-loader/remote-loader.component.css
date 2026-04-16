@@ -1,0 +1,12 @@
+.rl-state {
+  padding: 16px;
+  color: #666;
+  font-family: sans-serif;
+}
+.rl-error {
+  padding: 16px;
+  color: #c62828;
+  background: #ffebee;
+  border-radius: 4px;
+  font-family: sans-serif;
+}

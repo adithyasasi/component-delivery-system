@@ -2,6 +2,11 @@
   <h1>Component Delivery System</h1>
   <p class="subtitle">Enter a UUID returned from the registry server to load and render a remote component.</p>
 
+  <div class="version-badge">
+    <strong>@angular/forms:</strong>
+    <span class="version host">{{ hostFormsVersion }}</span>
+  </div>
+
   <div class="uuid-row">
     <label for="uuid">Component UUID</label>
     <input
@@ -21,6 +26,12 @@
       </app-remote-loader>
     </div>
   }
+
+   <!-- <app-remote-loader
+        [uuid]="'a3ec3740-2f6d-49f4-a620-902c4fb13fbc'"
+        [inputs]="{ entity: entity }"
+        (componentEvent)="onComponentEvent($event)">
+      </app-remote-loader> -->
 
   @if (lastEvent) {
     <div class="event-log">
