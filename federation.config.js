@@ -10,8 +10,4 @@ module.exports = withNativeFederation({
       requiredVersion: "auto",
     })
   },
-
-  features: {
-    ignoreUnusedDeps: true
-  }
 });

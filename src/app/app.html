@@ -21,18 +21,10 @@
     <h2>Remote Component</h2>
       <app-remote-loader
         [uuid]="uuid"
-        [inputs]="{ entity: entity }"
+        [inputs]="input"
         (componentEvent)="onComponentEvent($event)">
       </app-remote-loader>
     </div>
     }
-
-   <!-- <app-remote-loader
-        [uuid]="'a3ec3740-2f6d-49f4-a620-902c4fb13fbc'"
-        [inputs]="{ entity: entity }"
-        (componentEvent)="onComponentEvent($event)">
-      </app-remote-loader> -->
-
-
   <button (click)="valueChange()">Change Parent ID</button>
 </div>

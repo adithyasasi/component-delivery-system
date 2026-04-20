@@ -13,6 +13,10 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComponentRegistryService } from '../../services/component-registry.service';
+import {
+    IFederationInputs,
+    IFederationOutputEvent,
+} from '../../contracts/federation-contract';
 
 @Component({
     selector: 'app-remote-loader',
@@ -25,11 +29,11 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
     @Input() uuid!: string;
 
     // Complex input object to pass to the remote component's @Input() properties
-    @Input() inputs: Record<string, unknown> = {};
+    @Input() inputs: IFederationInputs = {} as IFederationInputs;
 
-    // Bubbles up any @Output() EventEmitter from the remote component
-    // Payload shape: { event: 'outputName', payload: <emitted value> }
-    @Output() componentEvent = new EventEmitter<{ event: string; payload: unknown }>();
+    // Bubbles up any @Output() EventEmitter from the remote component.
+    // Strongly typed via the shared IFederationOutputEvent contract.
+    @Output() componentEvent = new EventEmitter<IFederationOutputEvent>();
 
     @ViewChild('container', { read: ViewContainerRef }) container!: ViewContainerRef;
 
@@ -116,7 +120,11 @@ export class RemoteLoaderComponent implements OnChanges, AfterViewInit, OnDestro
             if (prop instanceof EventEmitter) {
                 console.log(prop);
                 const sub = prop.subscribe((payload: unknown) => {
-                    this.componentEvent.emit({ event: key, payload });
+                    // Cast to the shared contract type — the remote is expected
+                    // to emit events that conform to IFederationOutputEvent.
+                    this.componentEvent.emit(
+                        { event: key, payload } as IFederationOutputEvent
+                    );
                 });
                 this.outputSubscriptions.push(sub);
             }
